@@ -1,7 +1,7 @@
-# Wix-to-WordPress ETL Kit
+# Wix-to-WordPress Blog ETL Kit
 `v1.0-alpha`
 
-> **WARNING** This kit uses Basic Authentication for WordPress. This isn't the most secure method and is likely to change in the future. To use it, be sure to installl the [Basic Authentication Handler](https://github.com/WP-API/Basic-Auth) plugin on your WordPress project before executing the script. I recommend de-activating the plugin after you're done.
+> **WARNING** This kit uses Basic Authentication for WordPress. This isn't the most secure method and is likely to change in the future. To use it, be sure to installl the [Basic Authentication Handler](https://github.com/WP-API/Basic-Auth) plugin on your WordPress project before executing the script. I recommend de-activating the plugin after migration.
 
 ## Pre-requisites
 You'll need NPM to run this kit.
