@@ -1,6 +1,5 @@
 import WPAPI from 'wpapi';
 import { wp_config } from '../../config.js';
-import { File } from '@web-std/file';
 
 var wp = new WPAPI(wp_config);
 
@@ -22,6 +21,13 @@ const WPClient = {
         .search(label)
         .then(data => data.length ? data[0].id : WPClient.createCategory(label)),
     
+    /**
+     * Creates a Buffer from the cover media graphic of a Wix Blog post and
+     * uploads it to WordPress.
+     * 
+     * @param {Object} coverMedia Wix Blog Post 'coverMedia' object
+     * @returns 
+     */
     importCoverPhoto: async ({image}) => fetch(image.url)
             .then( createImageBuffer )
             .then( buffer => wp.media().file(buffer, image.id).create({title: image.id}) )

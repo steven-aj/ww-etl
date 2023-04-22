@@ -12,7 +12,7 @@ export const wix_config = {
 
 export const wp_config = {
     // The target of your website (must include /wp-json slug)
-    endpoint: '',
+    endpoint: 'https://your_site.com/wp-json',
     // Assuming you're using basic auth
     username: '',
     password: ''
