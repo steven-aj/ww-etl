@@ -1,34 +1,15 @@
 import WPClient from './clients/WPClient.js';
-import WPCLient from './clients/WPClient.js';
 import WixClient from "./clients/WixClient.js";
 import WixParser from './lib/WixParser.js';
 
-async function loadPosts() {
+async function extract() {
     let { posts } = await WixClient.getPosts();
     return posts;
 }
 
-async function transcribeCategories(labels) {
-    let categories = [];
-    for (let i = 0; i < labels.length; i++) {
-        categories.push( await WPClient.getCategoryId(labels[i]) )
-    }
-    return categories;
-}
-
-function transferMedia(coverMedia) {
-    if (!coverMedia.image) return null;
-    console.log("... cover found. Transferring media.")
-    return WPClient.importCoverPhoto(coverMedia);
-}
-
-function formatSingle(post) {
+function transform(post) {
     return new Promise(async (resolve, reject) => {
-        if (!post) reject('Failed to format single post: no post found.');
-
-        post.categoryIds = await WixClient.getCategoryLabels(post.categoryIds).then( transcribeCategories );
-        post.coverMedia = await transferMedia(post.coverMedia);
-
+        if (!post) reject('Failed to transform Wix post: no post found.');
         resolve({
             title: post.title,
             excerpt: post.excerpt,
@@ -41,18 +22,35 @@ function formatSingle(post) {
     });
 }
 
-async function start() {
-    let posts = await loadPosts();
+async function transcribeCategories(labels) {
+    let categories = [];
+    for (let i = 0; i < labels.length; i++) {
+        categories.push( await WPClient.getCategoryId(labels[i]) )
+    }
+    return categories;
+}
+
+function transferMedia(coverMedia) {
+    if (!coverMedia.image) return null;
+    console.log("... cover photo found. Transferring media.")
+    return WPClient.importCoverPhoto(coverMedia);
+}
+
+async function load() {
+    let posts = await extract();
 
     for (let i = 0; i < posts.length; i++) {
         let post = await WixClient
         .getSingle(posts[i].id)
-        .then(async ({ post }) => await formatSingle(post));
+        .then(async ({ post }) => await transform(post));
 
         console.log(`Publishing: ${post.title}...`);
+
+        post.categories = await WixClient.getCategoryLabels(post.categories).then( transcribeCategories );
+        post.featured_media = await transferMedia(post.featured_media);
 
         await WPCLient.createPost(post);
     }
 }
 
-start();
+load();
