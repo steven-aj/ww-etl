@@ -1,5 +1,5 @@
 # Wix-to-WordPress Blog ETL Kit
-`v1.0-alpha` - Only supports blog migrations
+`v1.1-alpha` - Only supports blog migrations
 
 > **DISCLAIMER** This project is still in its early stages of development and may produce undesired results. Use at your own risk.
 
