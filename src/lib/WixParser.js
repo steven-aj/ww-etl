@@ -1,5 +1,3 @@
-// import tag from 'html-tag';
-
 function tag(el, text) {
     return `<${el}>${text}</${el}>`
 }

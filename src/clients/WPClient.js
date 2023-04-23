@@ -31,7 +31,7 @@ const WPClient = {
     importCoverPhoto: async ({image}) => fetch(image.url)
             .then( createImageBuffer )
             .then( buffer => wp.media().file(buffer, image.id).create({title: image.id}) )
-            .then(({id}) => id)
+            .then( ({id}) => id )
             .catch( console.error )
 }
 
