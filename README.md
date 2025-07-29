@@ -1,3 +1,6 @@
+> [!WARNING]
+> This repo is no longer actively maintained. Use at your own risk.
+
 # Wix-to-WordPress Blog ETL Kit
 `v1.1-alpha` - Only supports blog migrations
 
